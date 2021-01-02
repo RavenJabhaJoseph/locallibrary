@@ -26,6 +26,13 @@ class Book(models.Model):
     def get_absolute_url(self):
         return reverse("book-detail", args=[str(self.id)])
 
+    def display_genre(self):
+        """Create a string for a genre. This is required to display genre in Admin."""
+        return ','.join(genre.name for genre in self.genre.all()[:2])
+        
+    display_genre.short_description = 'Genre'
+
+
 #Create BookInstance model
 class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, 
