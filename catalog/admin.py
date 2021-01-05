@@ -12,10 +12,15 @@ from .models import Author, Genre, Book, BookInstance
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
     fields = ['first_name', 'last_name', ('date_of_birth', 'date_of_death')]
+
+
+class BookInstanceInline(admin.TabularInline):
+    model = BookInstance
 #Register the book_admin class using decorator
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'author', 'display_genre')
+    inlines = [BookInstanceInline]
 
 #Register the book_instance_admin class using decorator
 @admin.register(BookInstance)
@@ -30,3 +35,4 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('status', 'due_back')
         }),
     )
+
